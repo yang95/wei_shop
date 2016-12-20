@@ -1,0 +1,17 @@
+{
+  "name": "yang95/wei_shop",
+  "require": {
+    "phpmailer/phpmailer": "~5.2",
+    "smarty/smarty": "3.1.19",
+    "qiniu/php-sdk": "^7.0",
+    "catfan/Medoo": "^1.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "WEI\\Lib\\": "src/lib/",
+      "WEI\\Ext\\": "src/ext/",
+      "WEI\\Conf\\": "src/conf/",
+      "WEI\\Controller\\": "src/controller/"
+    }
+  }
+}
