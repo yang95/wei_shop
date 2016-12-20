@@ -16,6 +16,7 @@ interface CrawlerInterface
      * @param $sCB
      * @param $eCB
      *
+     * @return mixed
      */
     public function doOneTask($url,$sCB,$eCB);
 
