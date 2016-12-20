@@ -37,7 +37,17 @@ class UserItem extends DomainCommon
         $this->logo     = $logo;
     }
 
+    public function getOrder(){
 
+    }
+    public function getCart(){
+
+    }
+    public function getProduce(){
+
+    }
+
+################
     /**
      * @return mixed
      */

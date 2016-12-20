@@ -7,11 +7,11 @@
  * Time: 10:19
  */
 
-namespace WEI\Controller\Domain\Pay;
+namespace WEI\Controller\Domain\Order;
 
 use WEI\Controller\Domain\Common\DomainCommon;
 
-class PayItem extends DomainCommon
+class OrderService extends DomainCommon
 {
 
 }

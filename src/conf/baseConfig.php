@@ -1,5 +1,4 @@
 <?php
-namespace WEI\Conf;
 
 use WEI\Controller\Common;
 use WEI\Lib\Container\Container;
@@ -40,5 +39,13 @@ return [
     },
     "Crawler"  => function () {
         return new Crawler();
+    },
+    "Alidayu"  => function () {
+        require_once(ROOT . "/src/ext/alidayu/Alidayu.php");
+        $c            = new \TopClient;
+        $c->appkey    = "23573406";
+        $c->secretKey = "3709c4a712514ce34e4b1bcfe19be422";
+        $req          = new \AlibabaAliqinFcSmsNumSendRequest;
+        return $req;
     }
 ];

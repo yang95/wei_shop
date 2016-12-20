@@ -16,9 +16,8 @@ class Index extends Common
 {
     public function run()
     {
-        $log = $this->load("Log");
-        $log->debug("123");
-        echo "hello index";
+
+       $this->RSP->html($this->U("Home","Index","run"));
     }
 
     public function ido()
