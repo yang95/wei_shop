@@ -13,5 +13,9 @@ use WEI\Controller\Domain\Common\DomainCommon;
 
 class ProductItem extends DomainCommon
 {
+    public $User;
+    public $Order;
+    public $Product;
+
 
 }

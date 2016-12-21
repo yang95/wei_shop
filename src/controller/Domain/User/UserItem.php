@@ -17,7 +17,7 @@ class UserItem extends DomainCommon
     public $openid;
     public $name;
     public $password;
-    public $logo;
+    public $Rank;
 
     /**
      * UserItem constructor.
@@ -26,24 +26,29 @@ class UserItem extends DomainCommon
      * @param $openid
      * @param $name
      * @param $password
-     * @param $logo
+     * @param $Rank
      */
-    public function __construct($id, $openid, $name, $password, $logo)
+    public function __construct($id, $openid, $name, $password, $Rank)
     {
         $this->id       = $id;
         $this->openid   = $openid;
         $this->name     = $name;
         $this->password = $password;
-        $this->logo     = $logo;
+        $this->Rank     = $Rank;
     }
 
-    public function getOrder(){
+    public function getOrder()
+    {
 
     }
-    public function getCart(){
+
+    public function getCart()
+    {
 
     }
-    public function getProduce(){
+
+    public function getProduct()
+    {
 
     }
 
@@ -62,6 +67,22 @@ class UserItem extends DomainCommon
     public function setId($id)
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRank()
+    {
+        return $this->Rank;
+    }
+
+    /**
+     * @param mixed $Rank
+     */
+    public function setRank($Rank)
+    {
+        $this->Rank = $Rank;
     }
 
     /**
@@ -113,23 +134,8 @@ class UserItem extends DomainCommon
     }
 
     /**
-     * @return mixed
-     */
-    public function getLogo()
-    {
-        return $this->logo;
-    }
-
-    /**
-     * @param mixed $logo
-     */
-    public function setLogo($logo)
-    {
-        $this->logo = $logo;
-    }
-
-    /**
      *保存用户
+     *
      * @return mixed
      */
     public function save()
@@ -139,7 +145,7 @@ class UserItem extends DomainCommon
             $iRes = $db->update("wei_usr", [
                 "name"     => $this->getName(),
                 "password" => $this->getPassword(),
-                "logo"     => $this->getLogo(),
+                "rank"     => $this->getRank(),
                 "openid"   => $this->getOpenid(),
             ],
                 [
@@ -149,7 +155,7 @@ class UserItem extends DomainCommon
             $iRes = $db->insert("wei_usr", [
                 "name"     => $this->getName(),
                 "password" => $this->getPassword(),
-                "logo"     => $this->getLogo(),
+                "rank"     => $this->getRank(),
                 "openid"   => $this->getOpenid(),
             ]);
         }

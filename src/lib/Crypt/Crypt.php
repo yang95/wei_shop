@@ -12,7 +12,7 @@ namespace WEI\Lib\Crypt;
 class Crypt
 {
     const PASSWORD_SOLD = "Sd2:sc))";
-    const SOLD          = "Sd2:sc))";
+    const SOLD          = "Sscsa43))";
 
     public function password($s)
     {

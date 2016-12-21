@@ -9,43 +9,40 @@ use WEI\Lib\Response\Response;
 use WEI\Lib\Router\Router;
 
 date_default_timezone_set('Asia/Shanghai');
-return [
-    "Request"  => function () {
-        return new Request();
-    },
-    "Response" => function () {
-        return new Response();
-    },
-    "Mysql"    => function () {
-        $database = new \medoo([
-            'database_type' => 'mysql',
-            'database_name' => 'yangakw',
-            'server'        => 'localhost',
-            'username'      => 'root',
-            'password'      => 'root',
-            'charset'       => 'utf8'
-        ]);
-        return $database;
-    },
-    "Log"      => function () {
-        $log = new Log(ROOT . "/public/log/" . date("Y-m-d") . ".log");
-        return $log;
-    },
-    "Router"   => function () {
-        return new Router();
-    },
-    "Crypt"    => function () {
-        echo "test";
-    },
-    "Crawler"  => function () {
-        return new Crawler();
-    },
-    "Alidayu"  => function () {
-        require_once(ROOT . "/src/ext/alidayu/Alidayu.php");
-        $c            = new \TopClient;
-        $c->appkey    = "23573406";
-        $c->secretKey = "3709c4a712514ce34e4b1bcfe19be422";
-        $req          = new \AlibabaAliqinFcSmsNumSendRequest;
-        return $req;
-    }
-];
+
+define("CONF_DIR_POSITIOON_WEI", __dir__);
+return array_merge_recursive(
+    [
+        "Request"  => function () {
+            return new Request();
+        },
+        "Response" => function () {
+            return new Response();
+        },
+        "Mysql"    => function () {
+            $database = new \medoo([
+                'database_type' => 'mysql',
+                'database_name' => 'yangakw',
+                'server'        => 'localhost',
+                'username'      => 'root',
+                'password'      => 'root',
+                'charset'       => 'utf8'
+            ]);
+            return $database;
+        },
+        "Log"      => function () {
+            $log = new Log(ROOT . "/public/log/" . date("Y-m-d") . ".log");
+            return $log;
+        },
+        "Router"   => function () {
+            return new Router();
+        },
+        "Crypt"    => function () {
+            return new WEI\Lib\Crypt\Crypt();
+        },
+        "Crawler"  => function () {
+            return new Crawler();
+        }
+    ],
+    require_once(CONF_DIR_POSITIOON_WEI . "/extendConfig.php")
+);

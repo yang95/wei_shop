@@ -50,48 +50,16 @@ class Common
     }
 
     /**
-     * 实例控制类
-     *
-     * @param $iSub
-     * @param $iClass
-     * @param $func
-     *
-     * @return int
-     */
-    public function instance($iSub, $iClass, $func)
-    {
-        $aClass = sprintf("WEI\\Controller\\%s\\%s", $iSub, $iClass);
-        if (class_exists($aClass)) {
-            /** @var Common $iObj */
-            $iObj = new $aClass;
-            #注入容器
-            $iObj->__INIT__($this->Container);
-        } else {
-            goto END;
-        }
-        if (method_exists($iObj, $func)) {
-            call_user_func(
-                [$iObj, $func]
-            );
-        } else {
-            goto END;
-        }
-        return 0;
-        END:
-        exit("access deny");
-    }
-
-    /**
      * 获取领域模拟模型
      *
      * @param $iSub
      * @param $iClass
-     * @param $func
      *
-     * @return int
+     * @return mixed
      */
-    public function domain($iSub, $iClass, $func)
+    public function domain($iSub, $iClass)
     {
+        $iObj   = null;
         $aClass = sprintf("WEI\\Controller\\Domain\\%s\\%s", $iSub, $iClass);
         if (class_exists($aClass)) {
             /** @var Common $iObj */
@@ -101,16 +69,8 @@ class Common
         } else {
             goto END;
         }
-        if (method_exists($iObj, $func)) {
-            call_user_func(
-                [$iObj, $func]
-            );
-        } else {
-            goto END;
-        }
-        return 11;
         END:
-        return 0;
+        return $iObj;
     }
 
 

@@ -11,27 +11,8 @@ namespace WEI\Controller\Domain\User;
 
 use WEI\Controller\Domain\Common\DomainCommon;
 
-class UserService extends DomainCommon
+class UserService extends DomainCommon implements UserInterface
 {
-    /**
-     * @param $id
-     *
-     * @return int|UserItem
-     */
-    public function getUserById($id)
-    {
-        $db    = $this->load("Mysql");
-        $iData = $db->select("wei_user", "*", ["id[=]" => $id]);
-        if (isset($iData[0])) {
-            $tmp = $iData[0];
-            $c   = new UserItem($tmp["id"], $tmp["openid"], $tmp["name"], $tmp["password"], $tmp["logo"]);
-            $c->__INIT__($this->Container);
-            return $c;
-        } else {
-            return 0;
-        }
-    }
-
     /**
      * @param $name
      * @param $password
@@ -66,5 +47,24 @@ class UserService extends DomainCommon
             $id = 0;
         }
         return $this->getUserById($id);
+    }
+
+    /**
+     * @param $id
+     *
+     * @return int|UserItem
+     */
+    public function getUserById($id)
+    {
+        $db    = $this->load("Mysql");
+        $iData = $db->select("wei_user", "*", ["id[=]" => $id]);
+        if (isset($iData[0])) {
+            $tmp = $iData[0];
+            $c   = new UserItem($tmp["id"], $tmp["openid"], $tmp["name"], $tmp["password"], $tmp["rank"]);
+            $c->__INIT__($this->Container);
+            return $c;
+        } else {
+            return 0;
+        }
     }
 }

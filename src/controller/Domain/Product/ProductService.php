@@ -11,7 +11,7 @@ namespace WEI\Controller\Domain\Product;
 
 use WEI\Controller\Domain\Common\DomainCommon;
 
-class ProductService extends DomainCommon
+class ProductService extends DomainCommon implements ProductInterface
 {
 
 }
