@@ -8,11 +8,11 @@
 
 
 return [
-    "Log"     => function () {
+    "Log"       => function () {
         $log = new WEI\Lib\Log\Log(ROOT . "/public/log/" . date("Y-m-d") . ".log");
         return $log;
     },
-    "Mysql"   => function () {
+    "Mysql"     => function () {
         $database = new \medoo([
             'database_type' => 'mysql',
             'database_name' => 'yangakw',
@@ -23,7 +23,7 @@ return [
         ]);
         return $database;
     },
-    "Alidayu" => function () {
+    "Alidayu"   => function () {
         require_once(ROOT . "/src/ext/alidayu/Alidayu.php");
         $c            = new \TopClient;
         $c->appkey    = "23573406";
@@ -51,5 +51,13 @@ return [
         $mail->addAddress($to,$to);
         $mail->send()
         */
+    },
+    "Qiniu"     => function () {
+        $bucket    = "utuotu-v1";
+        $accessKey = "16UtFTryGnDJhcFrji1TYVKB-MK_axGzkmu5BVuP";
+        $secretKey = "HJKacVbPdmM2m9AOGKsb55DetHMfmmwfRrAToZQK";
+        $auth      = new \Qiniu\Auth($accessKey, $secretKey);
+        $upToken   = $auth->uploadToken($bucket);
+        return $upToken;
     }
 ];

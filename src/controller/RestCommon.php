@@ -77,25 +77,6 @@ class RestCommon
         return $iObj;
     }
 
-
-    /**
-     * 构造url地址
-     *
-     * @param $iSub
-     * @param $iClass
-     * @param $func
-     *
-     * @return string
-     */
-    public function U($iSub, $iClass, $func)
-    {
-        return sprintf("/v1/%s/%s/%s.action"
-            , $iSub
-            , $iClass
-            , $func
-        );
-    }
-
     public function finish($Err, $iData)
     {
         $this->RSP->finish($Err, $iData);

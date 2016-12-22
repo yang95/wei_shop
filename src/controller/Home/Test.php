@@ -16,7 +16,7 @@ class Test extends RestCommon
 {
     public function run()
     {
-        $iData = $this->U(1,1,1);
+        $iData = "中文";
         $this->finish(Error::ERR_NONE, $iData);
     }
 

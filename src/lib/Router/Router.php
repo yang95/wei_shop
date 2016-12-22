@@ -18,10 +18,13 @@ class Router implements RouterInterface
 
     public function Run($Container)
     {
-        $tag    = "/";
         $uri    = $_SERVER["REQUEST_URI"];
         $iParam = parse_url($uri);
         $iParam = explode("/", $iParam["path"]);
+        #没有uri重写的情况
+        if ($iParam[1] == "index.php") {
+            array_shift($iParam);
+        }
         if ($iParam[1] != "v1") {
             goto END;
         }
