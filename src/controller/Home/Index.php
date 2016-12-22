@@ -9,25 +9,10 @@
 namespace WEI\Controller\Home;
 
 
-use WEI\Controller\Common;
+use WEI\Controller\RestCommon;
 use WEI\Lib\Error\Error;
 
-class Index extends Common
+class Index extends RestCommon
 {
-    public function run()
-    {
 
-       $this->RSP->html($this->U("Home","Index","run"));
-    }
-
-    public function ido()
-    {
-        $d   = $this->load("Crawler");
-        $url = "http://www.yangakw.cn";
-        $sCB = function ($param) {
-            return $param;
-        };
-        $iData = $d->doOneTask($url, $sCB);
-        $this->finish(Error::ERR_NONE, $iData);
-    }
 }

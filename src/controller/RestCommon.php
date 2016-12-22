@@ -9,11 +9,12 @@
 namespace WEI\Controller;
 
 
+use WEI\Domain\Common\DomainCommon;
 use WEI\Lib\Error\Error;
 use WEI\Lib\Request\Request;
 use WEI\Lib\Response\Response;
 
-class Common
+class RestCommon
 {
     protected $Container;
     /** @var  Request $REQ */
@@ -60,12 +61,15 @@ class Common
     public function domain($iSub, $iClass)
     {
         $iObj   = null;
-        $aClass = sprintf("WEI\\Controller\\Domain\\%s\\%s", $iSub, $iClass);
+        $aClass = sprintf("WEI\\Domain\\%s\\%s", $iSub, $iClass);
         if (class_exists($aClass)) {
-            /** @var Common $iObj */
             $iObj = new $aClass;
-            #注入容器
-            $iObj->__INIT__($this->Container);
+            if ($iObj instanceof DomainCommon) {
+                #注入容器
+                $iObj->__INIT__($this->Container);
+            } else {
+                $iObj = null;
+            }
         } else {
             goto END;
         }
@@ -94,11 +98,6 @@ class Common
 
     public function finish($Err, $iData)
     {
-        $out = [
-            "code" => $Err,
-            "msg"  => Error::getErr($Err),
-            "data" => $iData
-        ];
-        $this->RSP->json(json_encode($out));
+        $this->RSP->finish($Err, $iData);
     }
 }

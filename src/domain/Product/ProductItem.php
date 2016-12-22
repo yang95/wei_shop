@@ -7,9 +7,9 @@
  * Time: 10:19
  */
 
-namespace WEI\Controller\Domain\Product;
+namespace WEI\Domain\Product;
 
-use WEI\Controller\Domain\Common\DomainCommon;
+use WEI\Domain\Common\DomainCommon;
 
 class ProductItem extends DomainCommon
 {

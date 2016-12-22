@@ -7,9 +7,9 @@
  * Time: 10:19
  */
 
-namespace WEI\Controller\Domain\User;
+namespace WEI\Domain\User;
 
-use WEI\Controller\Domain\Common\DomainCommon;
+use WEI\Domain\Common\DomainCommon;
 
 class UserItem extends DomainCommon
 {

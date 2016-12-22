@@ -6,11 +6,11 @@
  * Time: 14:09
  */
 
-namespace WEI\Controller\Domain\Cart;
+namespace WEI\Domain\Cart;
 
 
-use WEI\Controller\Domain\Product\ProductItem;
-use WEI\Controller\Domain\User\UserItem;
+use WEI\Domain\Product\ProductItem;
+use WEI\Domain\User\UserItem;
 
 interface CartInterface
 {

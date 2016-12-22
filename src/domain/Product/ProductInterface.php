@@ -6,7 +6,7 @@
  * Time: 14:14
  */
 
-namespace WEI\Controller\Domain\Product;
+namespace WEI\Domain\Product;
 
 
 interface ProductInterface

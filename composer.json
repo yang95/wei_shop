@@ -11,6 +11,8 @@
       "WEI\\Lib\\": "src/lib/",
       "WEI\\Ext\\": "src/ext/",
       "WEI\\Conf\\": "src/conf/",
+      "WEI\\Console\\": "src/console/",
+      "WEI\\Domain\\": "src/domain/",
       "WEI\\Controller\\": "src/controller/"
     }
   }

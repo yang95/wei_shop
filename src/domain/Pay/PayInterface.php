@@ -6,12 +6,12 @@
  * Time: 14:02
  */
 
-namespace WEI\Controller\Domain\Pay;
+namespace WEI\Domain\Pay;
 
 
-use WEI\Controller\Domain\Order\OrderItem;
-use WEI\Controller\Domain\Product\ProductItem;
-use WEI\Controller\Domain\User\UserItem;
+use WEI\Domain\Order\OrderItem;
+use WEI\Domain\Product\ProductItem;
+use WEI\Domain\User\UserItem;
 
 interface PayInterface
 {

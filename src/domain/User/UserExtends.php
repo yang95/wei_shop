@@ -6,10 +6,10 @@
  * Time: 17:19
  */
 
-namespace WEI\Controller\Domain\User;
+namespace WEI\Domain\User;
 
 
-use WEI\Controller\Domain\Common\DomainCommon;
+use WEI\Domain\Common\DomainCommon;
 
 class UserExtends extends DomainCommon
 {

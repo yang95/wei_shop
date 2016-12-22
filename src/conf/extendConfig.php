@@ -8,6 +8,28 @@
 
 
 return [
+    "Log"     => function () {
+        $log = new WEI\Lib\Log\Log(ROOT . "/public/log/" . date("Y-m-d") . ".log");
+        return $log;
+    },
+    "Mysql"   => function () {
+        $database = new \medoo([
+            'database_type' => 'mysql',
+            'database_name' => 'yangakw',
+            'server'        => 'localhost',
+            'username'      => 'root',
+            'password'      => 'root',
+            'charset'       => 'utf8'
+        ]);
+        return $database;
+    },
+    "Alidayu" => function () {
+        require_once(ROOT . "/src/ext/alidayu/Alidayu.php");
+        $c            = new \TopClient;
+        $c->appkey    = "23573406";
+        $c->secretKey = "3709c4a712514ce34e4b1bcfe19be422";
+        return $c;
+    },
     "phpmailer" => function () {
         $mail = new \PHPMailer();
         $mail->isSMTP();
@@ -29,13 +51,5 @@ return [
         $mail->addAddress($to,$to);
         $mail->send()
         */
-    },
-    "Alidayu"  => function () {
-        require_once(ROOT . "/src/ext/alidayu/Alidayu.php");
-        $c            = new \TopClient;
-        $c->appkey    = "23573406";
-        $c->secretKey = "3709c4a712514ce34e4b1bcfe19be422";
-        $req          = new \AlibabaAliqinFcSmsNumSendRequest;
-        return $req;
     }
 ];

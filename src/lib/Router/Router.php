@@ -8,8 +8,9 @@
 
 namespace WEI\Lib\Router;
 
-
-use WEI\Controller\Common;
+use WEI\Controller\RestCommon;
+use WEI\Lib\Error\Error;
+use WEI\Lib\Response\Response;
 
 class Router implements RouterInterface
 {
@@ -17,7 +18,7 @@ class Router implements RouterInterface
 
     public function Run($Container)
     {
-        $tag = "/";
+        $tag    = "/";
         $uri    = $_SERVER["REQUEST_URI"];
         $iParam = parse_url($uri);
         $iParam = explode("/", $iParam["path"]);
@@ -28,20 +29,24 @@ class Router implements RouterInterface
         $iClass = isset($iParam[3]) ? $iParam[3] : "Index";
         $aClass = sprintf("WEI\\Controller\\%s\\%s", $iSub, $iClass);
         if (class_exists($aClass)) {
-            /** @var Common $iObj */
+            /** @var RestCommon $iObj */
             $iObj = new $aClass;
-            #注入容器
-            $iObj->__INIT__($Container);
+            if ($iObj instanceof RestCommon) {
+                #注入容器
+                $iObj->__INIT__($Container);
+            } else {
+                goto END;
+            }
         } else {
             goto END;
         }
         if (isset($iParam[4]) && substr($iParam[4], -7) == ".action") {
             $func = substr($iParam[4], 0, -7);
-            if(method_exists($iObj,$func)){
+            if (method_exists($iObj, $func)) {
                 call_user_func(
                     [$iObj, $func]
                 );
-            }else {
+            } else {
                 goto END;
             }
         } else {
@@ -49,6 +54,9 @@ class Router implements RouterInterface
         }
         return 0;
         END:
-        exit("access deny");
+        /** @var Response $RESP */
+        $RESP = $Container["Response"];
+        $RESP->finish(Error::ERR_ROUTE, "access deny");
+        return -11;
     }
 }

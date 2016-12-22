@@ -9,9 +9,10 @@
 
 namespace WEI\Controller\User;
 
-use WEI\Controller\Common;
 
-class Login extends Common
+use WEI\Controller\RestCommon;
+
+class Login extends RestCommon
 {
 
 }

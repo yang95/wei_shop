@@ -16,7 +16,9 @@ class ComposerStaticInit3195ab1991f1baa1d098bbecd2d0bdf8
         array (
             'WEI\\Lib\\' => 8,
             'WEI\\Ext\\' => 8,
+            'WEI\\Domain\\' => 11,
             'WEI\\Controller\\' => 15,
+            'WEI\\Console\\' => 12,
             'WEI\\Conf\\' => 9,
         ),
         'Q' => 
@@ -34,9 +36,17 @@ class ComposerStaticInit3195ab1991f1baa1d098bbecd2d0bdf8
         array (
             0 => __DIR__ . '/../..' . '/src/ext',
         ),
+        'WEI\\Domain\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/domain',
+        ),
         'WEI\\Controller\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src/controller',
+        ),
+        'WEI\\Console\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src/console',
         ),
         'WEI\\Conf\\' => 
         array (

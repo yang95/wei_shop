@@ -6,12 +6,12 @@
  * Time: 14:07
  */
 
-namespace WEI\Controller\Domain\Order;
+namespace WEI\Domain\Order;
 
 
-use WEI\Controller\Domain\Cart\CartItem;
-use WEI\Controller\Domain\Product\ProductItem;
-use WEI\Controller\Domain\User\UserItem;
+use WEI\Domain\Cart\CartItem;
+use WEI\Domain\Product\ProductItem;
+use WEI\Domain\User\UserItem;
 
 interface OrderInterface
 {

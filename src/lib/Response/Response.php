@@ -9,12 +9,15 @@
 namespace WEI\Lib\Response;
 
 
+use WEI\Lib\Error\Error;
+
 class Response
 {
     public function location($url)
     {
         header("Location: $url");
     }
+
     public function nocache()
     {
         header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
@@ -23,14 +26,27 @@ class Response
         header('Cache-Control: post-check=0, pre-check=0', false);
         header('Pragma: no-cache'); //兼容http1.0和https
     }
+
     public function json($data)
     {
         header("Content-type: application/json; charset=utf-8");
         echo $data;
     }
 
-    public function html($data){
+    public function html($data)
+    {
         header('Content-Type: text/html; charset=utf-8');
         echo $data;
+    }
+
+
+    public function finish($Err, $iData)
+    {
+        $out = [
+            "code" => $Err,
+            "msg"  => Error::getErr($Err),
+            "data" => $iData
+        ];
+        $this->json(json_encode($out));
     }
 }

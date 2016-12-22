@@ -6,7 +6,7 @@
  * Time: 14:11
  */
 
-namespace WEI\Controller\Domain\User;
+namespace WEI\Domain\User;
 
 
 interface UserInterface

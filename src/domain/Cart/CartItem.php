@@ -7,9 +7,9 @@
  * Time: 10:19
  */
 
-namespace WEI\Controller\Domain\Cart;
+namespace WEI\Domain\Cart;
 
-use WEI\Controller\Domain\Common\DomainCommon;
+use WEI\Domain\Common\DomainCommon;
 
 class CartItem extends DomainCommon
 {

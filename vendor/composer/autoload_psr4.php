@@ -8,7 +8,9 @@ $baseDir = dirname($vendorDir);
 return array(
     'WEI\\Lib\\' => array($baseDir . '/src/lib'),
     'WEI\\Ext\\' => array($baseDir . '/src/ext'),
+    'WEI\\Domain\\' => array($baseDir . '/src/domain'),
     'WEI\\Controller\\' => array($baseDir . '/src/controller'),
+    'WEI\\Console\\' => array($baseDir . '/src/console'),
     'WEI\\Conf\\' => array($baseDir . '/src/conf'),
     'Qiniu\\' => array($vendorDir . '/qiniu/php-sdk/src/Qiniu'),
 );

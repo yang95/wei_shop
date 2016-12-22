@@ -6,10 +6,10 @@
  * Time: 10:20
  */
 
-namespace WEI\Controller\Domain\User;
+namespace WEI\Domain\User;
 
 
-use WEI\Controller\Domain\Common\DomainCommon;
+use WEI\Domain\Common\DomainCommon;
 
 class UserService extends DomainCommon implements UserInterface
 {

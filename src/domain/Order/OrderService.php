@@ -7,12 +7,12 @@
  * Time: 10:19
  */
 
-namespace WEI\Controller\Domain\Order;
+namespace WEI\Domain\Order;
 
-use WEI\Controller\Domain\Cart\CartItem;
-use WEI\Controller\Domain\Common\DomainCommon;
-use WEI\Controller\Domain\Product\ProductItem;
-use WEI\Controller\Domain\User\UserItem;
+use WEI\Domain\Cart\CartItem;
+use WEI\Domain\Common\DomainCommon;
+use WEI\Domain\Product\ProductItem;
+use WEI\Domain\User\UserItem;
 
 class OrderService extends DomainCommon implements OrderInterface
 {

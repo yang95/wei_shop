@@ -7,11 +7,11 @@
  * Time: 10:19
  */
 
-namespace WEI\Controller\Domain\Pay;
+namespace WEI\Domain\Pay;
 
-use WEI\Controller\Domain\Common\DomainCommon;
-use WEI\Controller\Domain\Order\OrderItem;
-use WEI\Controller\Domain\User\UserItem;
+use WEI\Domain\Common\DomainCommon;
+use WEI\Domain\Order\OrderItem;
+use WEI\Domain\User\UserItem;
 
 class PayService extends DomainCommon implements PayInterface
 {
