@@ -9,7 +9,7 @@
 
 return [
     "Log"       => function () {
-        $log = new WEI\Lib\Log\Log(ROOT . "/public/log/" . date("Y-m-d") . ".log");
+        $log = new WEI\Lib\Log\Log(ROOT . "/log/" . date("Y-m-d") . ".log");
         return $log;
     },
     "Mysql"     => function () {
