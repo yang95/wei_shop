@@ -14,7 +14,11 @@ use WEI\Lib\Error\Error;
 
 class Qiniu extends RestCommon
 {
-    public function auth()
+    /**
+     * 七牛云认证
+     * rsp auth
+     */
+    public function authAction()
     {
         $qi = $this->load("Qiniu");
         $this->finish(Error::ERR_NONE, $qi);

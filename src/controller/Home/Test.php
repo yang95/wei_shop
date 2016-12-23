@@ -14,13 +14,20 @@ use WEI\Lib\Error\Error;
 
 class Test extends RestCommon
 {
-    public function run()
+    /**
+     * 测试输出中文
+     *
+     */
+    public function runAction()
     {
         $iData = "中文";
         $this->finish(Error::ERR_NONE, $iData);
     }
 
-    public function ido()
+    /**
+     * 测试curl
+     */
+    public function idoAction()
     {
         $d     = $this->load("Crawler");
         $url   = "http://www.yangakw.cn";
@@ -31,14 +38,20 @@ class Test extends RestCommon
         $this->finish(Error::ERR_NONE, $iData);
     }
 
-    public function test()
+    /**
+     *测试加密
+     */
+    public function testAction()
     {
         $crypt    = $this->load("Crypt");
         $password = $crypt->password(45646456456456);
         $this->finish(Error::ERR_NONE, $password);
     }
 
-    public function dayu()
+    /**
+     * 测试发送短信
+     */
+    public function dayuAction()
     {
         $client = $this->load("Alidayu");
         $req    = new \AlibabaAliqinFcSmsNumSendRequest;
@@ -51,7 +64,11 @@ class Test extends RestCommon
         $resp = $client->execute($req);
         $this->finish(Error::ERR_NONE, $resp);
     }
-    public function imail(){
+
+    /**
+     * 测试发送邮件
+     */
+    public function imailAction(){
         $mail=$this->load("phpmailer");
         $mail->Subject = "demo";
         $to = "yangakw@qq.com";

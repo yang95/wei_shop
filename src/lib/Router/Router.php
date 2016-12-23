@@ -10,15 +10,27 @@ namespace WEI\Lib\Router;
 
 use WEI\Controller\RestCommon;
 use WEI\Lib\Error\Error;
+use WEI\Lib\Log\Log;
 use WEI\Lib\Response\Response;
 
 class Router implements RouterInterface
 {
-    public $Container;
-
     public function Run($Container)
     {
         $uri    = $_SERVER["REQUEST_URI"];
+        #log debug
+        $debug_log = function() use ($Container,$uri){
+            /** @var Log $log */
+            $log = $Container["Log"];
+            $log->debug(
+                sprintf("%s\t\t\t%s"
+                    ,$uri
+                    ,json_encode($_REQUEST)
+                )
+            );
+        };
+        $debug_log();
+        #log debug end
         $iParam = parse_url($uri);
         $iParam = explode("/", $iParam["path"]);
         #没有uri重写的情况
@@ -45,6 +57,7 @@ class Router implements RouterInterface
         }
         if (isset($iParam[4]) && substr($iParam[4], -7) == ".action") {
             $func = substr($iParam[4], 0, -7);
+            $func = $func."Action";
             if (method_exists($iObj, $func)) {
                 call_user_func(
                     [$iObj, $func]
