@@ -3,7 +3,7 @@ define("ROOT", __dir__);
 require_once(ROOT . "/vendor/autoload.php");
 $main  = function ($debug) {
     $app = \WEI\Lib\Container\Container::__INIT__(
-        require_once(ROOT . "/src/Conf/baseConfig.php")
+        require_once(ROOT . "/src/conf/baseConfig.php")
     );
     $app["Log"]->setDebug($debug);
     if (substr(php_sapi_name(), 0, 3) == 'cli') {
