@@ -3,7 +3,12 @@ define("ROOT", __dir__);
 require_once(ROOT . "/vendor/autoload.php");
 $main  = function ($debug) {
     if($debug){
-        register_shutdown_function(function(){ var_dump(error_get_last()); });
+        register_shutdown_function(function(){
+            $Error = error_get_last();
+            if(!empty($Error)){
+                var_dump($Error); 
+            }
+        });
     }
     $app = \WEI\Lib\Container\Container::__INIT__(
         require_once(ROOT . "/src/conf/baseConfig.php")
