@@ -9,6 +9,9 @@
 
 return [
     "Log"       => function () {
+        if(!is_dir(ROOT . "/log/")){
+            mkdir(ROOT . "/log/");
+        }
         $log = new WEI\Lib\Log\Log(ROOT . "/log/" . date("Y-m-d") . ".log");
         return $log;
     },
