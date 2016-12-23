@@ -2,6 +2,9 @@
 define("ROOT", __dir__);
 require_once(ROOT . "/vendor/autoload.php");
 $main  = function ($debug) {
+    if($debug){
+        register_shutdown_function(function(){ var_dump(error_get_last()); });
+    }
     $app = \WEI\Lib\Container\Container::__INIT__(
         require_once(ROOT . "/src/conf/baseConfig.php")
     );
@@ -15,6 +18,5 @@ $main  = function ($debug) {
     }
 };
 $debug = true;#开启debug
-
 #php index.php -s Reflact -c Reflact -f run 在doc/Interface/下查看文档
 $main($debug);
