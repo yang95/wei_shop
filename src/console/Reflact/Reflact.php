@@ -17,10 +17,12 @@ class Reflact extends CliCommon
         [
             "Home",
             "Test",
+            "主页接口",
         ],
         [
             "Tool",
             "Qiniu",
+            "工具接口",
         ],
     ];
 
@@ -35,6 +37,7 @@ class Reflact extends CliCommon
                 $v[0],
                 $v[1]
             );
+            $content .= "\n# $v[2] ：\n";
             if (class_exists($iClass)) {
                 $Ref     = new \ReflectionClass($iClass);
                 $aMethod = $Ref->getMethods(\ReflectionMethod::IS_PUBLIC);
@@ -45,7 +48,7 @@ class Reflact extends CliCommon
                     }
                     $str = sprintf(
                         "%s%s%s%s",
-                        "## url地址： /v1/" . $v[0] ."/".$v[1] ."/".substr($methob_name,0,-6). ".action\n",
+                        "### url地址： /v1/" . $v[0] ."/".$v[1] ."/".substr($methob_name,0,-6). ".action\n",
                         "\n```\n文档：\n\n     " . $Method->getDocComment() . "\n",
                         "\n\n类地址： \n\n     " . $iClass ."->". $methob_name. "\n```\n",
                         "\n\n\n\n"
@@ -54,6 +57,6 @@ class Reflact extends CliCommon
                 }
             }
         }
-        file_put_contents("doc/Interface/doc_" . date("Y-m-d-H-i-s") . ".md", $content);
+        file_put_contents("doc/Interface/doc_" . date("Y-m-d") . ".md", $content);
     }
 }
