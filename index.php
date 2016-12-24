@@ -6,7 +6,7 @@ $main  = function ($debug) {
         register_shutdown_function(function(){
             $Error = error_get_last();
             if(!empty($Error)){
-                var_dump($Error); 
+                var_dump($Error);
             }
         });
     }
@@ -23,5 +23,4 @@ $main  = function ($debug) {
     }
 };
 $debug = true;#开启debug
-#php index.php -s Reflact -c Reflact -f run 在doc/Interface/下查看文档
 $main($debug);
