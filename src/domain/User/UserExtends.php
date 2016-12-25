@@ -15,19 +15,8 @@ class UserExtends extends DomainCommon
 {
     /** @var  UserItem $User */
     public $User;
-    public $Extends = [
-        "logo"  => '',
-        "phone" => '',
-    ];
 
-    public function __construct()
-    {
-        foreach ($this->Extends as $k => $v) {
-            $this->Extends[$k] = $this->db_get($k);
-        }
-    }
-
-    private function db_get($field)
+    public function get($field)
     {
         if (!($this->User instanceof UserItem)) {
             goto END;
@@ -43,30 +32,14 @@ class UserExtends extends DomainCommon
     }
 
     /**
-     * 获取自己的扩展
-     *
-     * @param $key
-     *
-     * @return mixed|string
-     */
-    public function get($key)
-    {
-        if (isset($this->Extends[$key])) {
-            return $this->Extends[$key];
-        } else {
-            return '';
-        }
-    }
-
-    /**
      * 保存扩展信息
      *
      * @param $field
      * @param $val
      *
-     * @return int
+     * @return mixed
      */
-    public function save($field, $val)
+    public function set($field, $val)
     {
         if (!($this->User instanceof UserItem)) {
             goto END;
@@ -104,6 +77,6 @@ class UserExtends extends DomainCommon
         }
         return 0;
         END:
-        return -1;
+        return '';
     }
 }

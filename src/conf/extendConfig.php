@@ -9,16 +9,16 @@
 
 return [
     "Log"       => function () {
-        if(!is_dir(ROOT . "/log/")){
+        if (!is_dir(ROOT . "/log/")) {
             mkdir(ROOT . "/log/");
         }
         $log = new WEI\Lib\Log\Log(ROOT . "/log/" . date("Y-m-d") . ".log");
         return $log;
     },
     "Mysql"     => function () {
-        $database = new \medoo([
+        $database = new   WEI\Lib\Db\Db([
             'database_type' => 'mysql',
-            'database_name' => 'yangakw',
+            'database_name' => 'wei_shop',
             'server'        => 'localhost',
             'username'      => 'root',
             'password'      => 'root',
@@ -62,5 +62,10 @@ return [
         $auth      = new \Qiniu\Auth($accessKey, $secretKey);
         $upToken   = $auth->uploadToken($bucket);
         return $upToken;
+    },
+    "Wechat"    => function () {
+        $appid     = "ascascascasca";
+        $appsecret = "scascadscsdcsd";
+        return new WEI\Lib\Wechat\Wechat($appid, $appsecret);
     }
 ];

@@ -24,6 +24,11 @@ class Reflact extends CliCommon
             "Qiniu",
             "工具接口",
         ],
+        [
+            "User",
+            "UserBase",
+            "用户注册登录",
+        ],
     ];
 
     /**

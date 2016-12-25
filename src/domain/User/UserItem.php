@@ -18,24 +18,11 @@ class UserItem extends DomainCommon
     public $name;
     public $password;
     public $Rank;
+    public $phone;
+    public $email;
+    public $valid_phone;
+    public $valid_email;
 
-    /**
-     * UserItem constructor.
-     *
-     * @param $id
-     * @param $openid
-     * @param $name
-     * @param $password
-     * @param $Rank
-     */
-    public function __construct($id, $openid, $name, $password, $Rank)
-    {
-        $this->id       = $id;
-        $this->openid   = $openid;
-        $this->name     = $name;
-        $this->password = $password;
-        $this->Rank     = $Rank;
-    }
 
     public function getOrder()
     {
@@ -74,7 +61,8 @@ class UserItem extends DomainCommon
      */
     public function getRank()
     {
-        return $this->Rank;
+        $rank = empty($this->Rank) ? 0 : $this->Rank;
+        return $rank;
     }
 
     /**
@@ -90,7 +78,7 @@ class UserItem extends DomainCommon
      */
     public function getOpenid()
     {
-        return $this->openid;
+        return empty($this->openid)?'':$this->openid;
     }
 
     /**
@@ -107,6 +95,72 @@ class UserItem extends DomainCommon
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPhone()
+    {
+        return empty($this->phone)?'':$this->phone;
+    }
+
+    /**
+     * @param mixed $phone
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEmail()
+    {
+        return empty($this->email)?'':$this->email;
+    }
+
+    /**
+     * @param mixed $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getValidPhone()
+    {
+        $valid = empty($this->valid_phone) ? 0 : $this->valid_phone;
+        return $valid;
+    }
+
+    /**
+     * @param mixed $valid_phone
+     */
+    public function setValidPhone($valid_phone)
+    {
+        $this->valid_phone = $valid_phone;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getValidEmail()
+    {
+        $valid = empty($this->valid_email) ? 0 : $this->valid_email;
+        return $valid;
+    }
+
+    /**
+     * @param mixed $valid_email
+     */
+    public function setValidEmail($valid_email)
+    {
+        $this->valid_email = $valid_email;
     }
 
     /**
@@ -141,22 +195,31 @@ class UserItem extends DomainCommon
     public function save()
     {
         $db = $this->load("Mysql");
-        if ($db->getId()) {
-            $iRes = $db->update("wei_usr", [
-                "name"     => $this->getName(),
-                "password" => $this->getPassword(),
-                "rank"     => $this->getRank(),
-                "openid"   => $this->getOpenid(),
+        #$db->debug();
+        if ($this->getId()) {
+            $iRes = $db->update('wei_user', [
+                "name"        => $this->getName(),
+                "password"    => $this->getPassword(),
+                "rank"        => $this->getRank(),
+                "openid"      => $this->getOpenid(),
+                "phone"       => $this->getPhone(),
+                "email"       => $this->getEmail(),
+                "valid_phone" => $this->getValidPhone(),
+                "valid_email" => $this->getValidEmail(),
             ],
                 [
-                    "id[=]" => $db->getId()
+                    "id[=]" => $this->getId()
                 ]);
         } else {
-            $iRes = $db->insert("wei_usr", [
-                "name"     => $this->getName(),
-                "password" => $this->getPassword(),
-                "rank"     => $this->getRank(),
-                "openid"   => $this->getOpenid(),
+            $iRes = $db->insert('wei_user', [
+                "name"        => $this->getName(),
+                "password"    => $this->getPassword(),
+                "rank"        => $this->getRank(),
+                "openid"      => $this->getOpenid(),
+                "phone"       => $this->getPhone(),
+                "email"       => $this->getEmail(),
+                "valid_phone" => $this->getValidPhone(),
+                "valid_email" => $this->getValidEmail(),
             ]);
         }
         return $iRes;
