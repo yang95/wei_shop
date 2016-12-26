@@ -249,7 +249,7 @@ class ProductItem extends DomainCommon
                 [
                     "name"    => $this->getName(),
                     "price"   => $this->getPrice(),
-                    "from"    => $this->getFrom,
+                    "from"    => $this->getFrom(),
                     "credit"  => $this->getCredit(),
                     "content" => $this->getContent(),
                     "sale"    => $this->getSale(),

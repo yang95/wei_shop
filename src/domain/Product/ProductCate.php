@@ -110,12 +110,13 @@ class ProductCate extends DomainCommon
     /**
      * 增加商品到分类
      *
-     * @param $product_id
+     * @param ProductItem $product
      *
      * @return int
      */
-    public function addProduct($product_id)
+    public function addProduct(ProductItem $product)
     {
+        $product_id = $product->getId();
         if (!in_array($this->cate, $product_id)) {
             array_push($this->cate, $product_id);
         }

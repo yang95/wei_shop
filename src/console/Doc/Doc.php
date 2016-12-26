@@ -7,11 +7,11 @@
  * Time: 19:04
  */
 
-namespace WEI\Console\Reflact;
+namespace WEI\Console\Doc;
 
 use WEI\Console\CliCommon;
 
-class Reflact extends CliCommon
+class Doc extends CliCommon
 {
     const CONFIG = [
         [
@@ -23,6 +23,11 @@ class Reflact extends CliCommon
             "User",
             "UserBase",
             "用户注册登录",
+        ],
+        [
+            "Product",
+            "ProductBase",
+            "商品接口",
         ],
     ];
 
@@ -48,9 +53,9 @@ class Reflact extends CliCommon
                     }
                     $str = sprintf(
                         "%s%s%s%s",
-                        "### url地址： /v1/" . $v[0] ."/".$v[1] ."/".substr($methob_name,0,-6). ".action\n",
+                        "### url地址： /v1/" . $v[0] . "/" . $v[1] . "/" . substr($methob_name, 0, -6) . ".action\n",
                         "\n```\n文档：\n\n     " . $Method->getDocComment() . "\n",
-                        "\n\n类地址： \n\n     " . $iClass ."->". $methob_name. "\n```\n",
+                        "\n\n类地址： \n\n     " . $iClass . "->" . $methob_name . "\n```\n",
                         "\n\n\n\n"
                     );
                     $content .= $str;

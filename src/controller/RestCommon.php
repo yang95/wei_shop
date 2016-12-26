@@ -10,12 +10,17 @@ namespace WEI\Controller;
 
 
 use WEI\Domain\Common\DomainCommon;
+use WEI\Domain\User\UserItem;
+use WEI\Domain\User\UserService;
 use WEI\Lib\Error\Error;
 use WEI\Lib\Request\Request;
 use WEI\Lib\Response\Response;
 
 class RestCommon
 {
+
+    const UID = "weiUkey";
+
     protected $Container;
     /** @var  Request $REQ */
     protected $REQ;
@@ -80,5 +85,24 @@ class RestCommon
     public function finish($Err, $iData)
     {
         $this->RSP->finish($Err, $iData);
+    }
+
+
+    /**
+     * 用户是否登陆
+     *
+     * @return mixed
+     */
+    protected function getUser()
+    {
+        /** @var UserService $UserService */
+        $UserService = $this->domain("User", "UserService");
+        $User_id     = $this->REQ->cookie(self::UID);
+        $User        = $UserService->getUserById($User_id);
+        if ($User instanceof UserItem) {
+            return $User;
+        }
+        $this->finish(Error::ERR_LOGIN, '');
+        exit();
     }
 }

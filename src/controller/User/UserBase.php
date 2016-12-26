@@ -18,7 +18,6 @@ use WEI\Lib\Error\Error;
 
 class UserBase extends RestCommon
 {
-    const UID = "weiUkey";
 
     /**
      * 注册接口
@@ -80,6 +79,20 @@ class UserBase extends RestCommon
     }
 
     /**
+     * 微信登陆接口
+     */
+    public function weichatAction()
+    {
+        $User = $this->getUser();
+        if ($User instanceof UserItem) {
+            $this->RSP->location("index");
+        } else {
+            $url = $this->load("Wechat")->redict();
+            $this->RSP->location($url);
+        }
+    }
+
+    /**
      * 用户完善信息
      * password
      *
@@ -102,50 +115,17 @@ class UserBase extends RestCommon
     }
 
     /**
-     * 微信登陆接口
-     */
-    public function weichatAction()
-    {
-        #用户是否登陆
-        /** @var UserService $UserService */
-        $UserService = $this->domain("User", "UserService");
-        $User_id     = $this->REQ->cookie(self::UID);
-        $User        = $UserService->getUserById($User_id);
-        if ($User instanceof UserItem) {
-            $this->RSP->location("index");
-        } else {
-            $url = $this->load("Wechat")->redict();
-            $this->RSP->location($url);
-        }
-    }
-
-    /**
      *
      * 退出登录
      */
-    public function logoutAction(){
+    public function logoutAction()
+    {
         #清除cookie
-        $User_id     = $this->REQ->cookie(self::UID,'',true);
+        $User_id = $this->REQ->cookie(self::UID, '', true);
         $this->finish(Error::ERR_NONE, '');
     }
 
-    /**
-     * 用户是否登陆
-     *
-     * @return mixed
-     */
-    private function getUser()
-    {
-        /** @var UserService $UserService */
-        $UserService = $this->domain("User", "UserService");
-        $User_id     = $this->REQ->cookie(self::UID);
-        $User        = $UserService->getUserById($User_id);
-        if ($User instanceof UserItem) {
-            return $User;
-        }
-        exit(
-        $this->finish(Error::ERR_LOGIN, '')
-        );
-    }
+
+
 
 }

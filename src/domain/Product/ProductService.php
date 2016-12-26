@@ -38,43 +38,6 @@ class ProductService extends DomainCommon implements ProductInterface
         return 1;
     }
 
-    /**
-     * 保存商品
-     *
-     * @param $tmp
-     *
-     * @return int
-     */
-    public function saveProduct($tmp)
-    {
-        $vData = 0;
-        if ($this->initialize() < 0) {
-            goto END;
-        }
-        $p_i   = $this->buildProduct($tmp);
-        $vData = $p_i->save();
-        END:
-        return $vData;
-    }
-
-    /**
-     * 保存分类
-     *
-     * @param $tmp
-     *
-     * @return int
-     */
-    public function saveCate($tmp)
-    {
-        $vData = 0;
-        if ($this->initialize() < 0) {
-            goto END;
-        }
-        $p_i   = $this->buildCate($tmp);
-        $vData = $p_i->save();
-        END:
-        return $vData;
-    }
 
     /**
      * 根据分类获取产品
@@ -118,12 +81,15 @@ class ProductService extends DomainCommon implements ProductInterface
      */
     public function getProductByCond($cond)
     {
-        $db    = $this->load("Mysql");
+        $db = $this->load("Mysql");
+        #debug  $db->debug();
         $data  = $db->select("wei_product", "*", $cond);
         $vData = [];
-        foreach ($data as $v) {
-            if (is_array($v) && isset($v["id"])) {
-                array_push($vData, $this->buildProduct($v));
+        if (!empty($data)) {
+            foreach ($data as $v) {
+                if (is_array($v) && isset($v["id"])) {
+                    array_push($vData, $this->buildProduct($v));
+                }
             }
         }
         return $vData;
@@ -155,25 +121,57 @@ class ProductService extends DomainCommon implements ProductInterface
         return $this->buildCate($data);
     }
 
+    /**
+     * son cate
+     *
+     * @param ProductCate $father
+     *
+     * @return array|null
+     */
     public function getProductCateByFather(ProductCate $father)
     {
         $db   = $this->load("Mysql");
-        $data = $db->select("wei_product_cate", "*", ["father[=]" => $father->getFather()]);
+        $data = $db->select("wei_product_cate", "*", ["father[=]" => $father->getId()]);
         if (empty($data)) {
-            return 0;
+            return null;
         }
-        $vData[] = $father;
+        $vData = [];
         foreach ($data as $v) {
             if (is_array($v) && isset($v["id"])) {
                 $son = $this->buildCate($v);
                 array_push($vData, $son);
-                $iData = $this->getProductCateByFather($son);
-                if (is_array($iData)) {
-                    array_merge($vData, $iData);
+                if ($son instanceof ProductCate) {
+                    $iData = $this->getProductCateByFather($son);
+                    if (is_array($iData)) {
+                        $vData = array_merge($vData, $iData);
+                    }
                 }
             }
         }
         return $vData;
+    }
+
+    /**
+     *
+     * produce 在哪个分类下
+     *
+     * @param ProductItem $item
+     *
+     * @return array
+     */
+    public function getCateByProduct(ProductItem $item)
+    {
+        $id     = $item->getId();
+        $vLists = [];
+        $father = $this->getProductCateById(0);
+        $list   = $this->getProductCateByFather($father);
+        foreach ($list as $li) {
+            $data = $li->getCate();
+            if (in_array($data, $id)) {
+                array_push($vLists, $li);
+            }
+        }
+        return $vLists;
     }
 
     /**
@@ -187,6 +185,45 @@ class ProductService extends DomainCommon implements ProductInterface
     {
         $db = $this->load("Mysql");
         return $db->delete("wei_product", ["id[=]" => $id]);
+    }
+
+
+    /**
+     * 保存商品
+     *
+     * @param $tmp
+     *
+     * @return int
+     */
+    public function saveProduct($tmp)
+    {
+        $vData = 0;
+        if ($this->initialize() < 0) {
+            goto END;
+        }
+        $p_i   = $this->buildProduct($tmp);
+        $vData = $p_i->save();
+        END:
+        return $vData;
+    }
+
+    /**
+     * 保存分类
+     *
+     * @param $tmp
+     *
+     * @return int
+     */
+    public function saveCate($tmp)
+    {
+        $vData = 0;
+        if ($this->initialize() < 0) {
+            goto END;
+        }
+        $p_i   = $this->buildCate($tmp);
+        $vData = $p_i->save();
+        END:
+        return $vData;
     }
 
     #################适配器
@@ -210,7 +247,39 @@ class ProductService extends DomainCommon implements ProductInterface
 
     public function buildProduct($tmp)
     {
+        /** @var ProductItem $c */
         $c = $this->domain("Product", "ProductItem");
+        if (isset($tmp["id"])) {
+            $c->setId($tmp["id"]);
+        }
+        if (isset($tmp["name"])) {
+            $c->setName($tmp["name"]);
+        }
+        if (isset($tmp["from"])) {
+            $c->setFrom($tmp["from"]);
+        }
+        if (isset($tmp["price"])) {
+            $c->setPrice($tmp["price"]);
+        }
+        if (isset($tmp["credit"])) {
+            $c->setCredit($tmp["credit"]);
+        }
+        if (isset($tmp["content"])) {
+            $c->setContent($tmp["content"]);
+        }
+        if (isset($tmp["sale"])) {
+            $c->setSale($tmp["sale"]);
+        }
+        if (isset($tmp["look"])) {
+            $c->setLook($tmp["look"]);
+        }
+        if (isset($tmp["brank"])) {
+            $c->setBrand($tmp["brank"]);
+        }
+        if (isset($tmp["size"])) {
+            $c->setSize($tmp["size"]);
+        }
+
         foreach ($tmp as $k => $v) {
             $c->set($k, $v);
         }
