@@ -23,9 +23,11 @@ class UserService extends DomainCommon implements UserInterface
     {
         $crypt = $this->load("Crypt");
         $db    = $this->load("Mysql");
-        $iData = $db->get("wei_user", "*", ["AND"=>[
-            "name[=]" => $name,
-            "password[=]" => $password ]
+        $iData = $db->get("wei_user", "*", [
+            "AND" => [
+                "name[=]"     => $name,
+                "password[=]" => $password
+            ]
         ]);
         if (isset($iData)) {
             $id = $iData["id"];
@@ -34,7 +36,9 @@ class UserService extends DomainCommon implements UserInterface
         }
         return $this->getUserById($id);
     }
-    public function userNameExist($name){
+
+    public function userNameExist($name)
+    {
         $db    = $this->load("Mysql");
         $iData = $db->get("wei_user", "*", ["name[=]" => $name]);
         if (isset($iData)) {
@@ -64,6 +68,7 @@ class UserService extends DomainCommon implements UserInterface
 
     /**
      * 获取user
+     *
      * @param $id
      *
      * @return int|UserItem
@@ -80,6 +85,7 @@ class UserService extends DomainCommon implements UserInterface
             return 0;
         }
     }
+
     /**
      * 构造user
      *
@@ -89,35 +95,34 @@ class UserService extends DomainCommon implements UserInterface
      */
     public function buildUser($tmp)
     {
-        $c = new UserItem();
-        if(isset($tmp["id"])){
+        $c = $this->domain("User", "UserItem");
+        if (isset($tmp["id"])) {
             $c->setId($tmp["id"]);
         }
-        if(isset($tmp["openid"])){
+        if (isset($tmp["openid"])) {
             $c->setOpenid($tmp["openid"]);
         }
-        if(isset($tmp["name"])){
+        if (isset($tmp["name"])) {
             $c->setName($tmp["name"]);
         }
-        if(isset($tmp["password"])){
+        if (isset($tmp["password"])) {
             $c->setPassword($tmp["password"]);
         }
-        if(isset($tmp["rank"])){
+        if (isset($tmp["rank"])) {
             $c->setRank($tmp["rank"]);
         }
-        if(isset($tmp["phone"])){
+        if (isset($tmp["phone"])) {
             $c->setPhone($tmp["phone"]);
         }
-        if(isset($tmp["email"])){
+        if (isset($tmp["email"])) {
             $c->setEmail($tmp["email"]);
         }
-        if(isset($tmp["valid_phone"])){
+        if (isset($tmp["valid_phone"])) {
             $c->setValidPhone($tmp["valid_phone"]);
         }
-        if(isset($tmp["valid_email"])){
+        if (isset($tmp["valid_email"])) {
             $c->setValidEmail($tmp["valid_email"]);
         }
-        $c->__INIT__($this->Container);
         return $c;
     }
 

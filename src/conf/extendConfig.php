@@ -30,7 +30,7 @@ return [
         require_once(ROOT . "/src/ext/alidayu/Alidayu.php");
         $c            = new \TopClient;
         $c->appkey    = "23573406";
-        $c->secretKey = "$#$#$#$#";
+        $c->secretKey = "3709c4a712514ce34e4b1bcfe19be422";
         return $c;
     },
     "phpmailer" => function () {
@@ -43,7 +43,7 @@ return [
         $mail->SMTPAuth    = true;
         $mail->CharSet     = "utf-8";
         $mail->Username    = "yangakw@163.com";
-        $mail->Password    = "******";
+        $mail->Password    = "admin123";
         $mail->setFrom('yangakw@163.com', 'wei_shop');
         $mail->addReplyTo('yangakw@163.com', 'wei_shop');
         return $mail;
@@ -58,7 +58,7 @@ return [
     "Qiniu"     => function () {
         $bucket    = "utuotu-v1";
         $accessKey = "16UtFTryGnDJhcFrji1TYVKB-MK_axGzkmu5BVuP";
-        $secretKey = "******";
+        $secretKey = "HJKacVbPdmM2m9AOGKsb55DetHMfmmwfRrAToZQK";
         $auth      = new \Qiniu\Auth($accessKey, $secretKey);
         $upToken   = $auth->uploadToken($bucket);
         return $upToken;

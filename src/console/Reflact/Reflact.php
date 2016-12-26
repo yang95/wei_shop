@@ -15,11 +15,6 @@ class Reflact extends CliCommon
 {
     const CONFIG = [
         [
-            "Home",
-            "Test",
-            "主页接口",
-        ],
-        [
             "Tool",
             "Qiniu",
             "工具接口",

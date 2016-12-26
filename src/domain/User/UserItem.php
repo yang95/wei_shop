@@ -23,20 +23,37 @@ class UserItem extends DomainCommon
     public $valid_phone;
     public $valid_email;
 
+    /**
+     * 获取用户的积分
+     *
+     * @return UserCredit
+     */
+    public function getCredit()
+    {
+        $Credit = new UserCredit($this);
+        return $Credit;
+    }
 
+    /**
+     * 返回OrderService 对象
+     *
+     * @return mixed
+     */
     public function getOrder()
     {
-
+        $o_s = $this->domain("Order", "OrderService");
+        return $o_s;
     }
 
+    /**
+     * 返回购物车对象
+     *
+     * @return mixed
+     */
     public function getCart()
     {
-
-    }
-
-    public function getProduct()
-    {
-
+        $o_s = $this->domain("Cart", "CartService");
+        return $o_s;
     }
 
 ################
@@ -78,7 +95,7 @@ class UserItem extends DomainCommon
      */
     public function getOpenid()
     {
-        return empty($this->openid)?'':$this->openid;
+        return empty($this->openid) ? '' : $this->openid;
     }
 
     /**
@@ -102,7 +119,7 @@ class UserItem extends DomainCommon
      */
     public function getPhone()
     {
-        return empty($this->phone)?'':$this->phone;
+        return empty($this->phone) ? '' : $this->phone;
     }
 
     /**
@@ -118,7 +135,7 @@ class UserItem extends DomainCommon
      */
     public function getEmail()
     {
-        return empty($this->email)?'':$this->email;
+        return empty($this->email) ? '' : $this->email;
     }
 
     /**

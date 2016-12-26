@@ -2,3 +2,4 @@
 /vendor
 /log
 /composer.lock
+/src/conf/extendConfig.php
