@@ -119,6 +119,12 @@ class AdItem extends DomainCommon
         $this->info = $info;
     }
 
+    public function rm()
+    {
+        $db = $this->load("Mysql");
+        $db->delete("wei_ad", ["id[=]" => $this->getId()]);
+    }
+
     public function save()
     {
         $db = $this->load("Mysql");

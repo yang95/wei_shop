@@ -29,6 +29,11 @@ class Doc extends CliCommon
             "ProductBase",
             "商品接口",
         ],
+        [
+            "Product",
+            "ProductExtends",
+            "商品扩展接口",
+        ],
     ];
 
     /**

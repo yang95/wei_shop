@@ -245,6 +245,11 @@ class ProductService extends DomainCommon implements ProductInterface
         return $c;
     }
 
+    /**
+     * @param $tmp
+     *
+     * @return null|ProductItem
+     */
     public function buildProduct($tmp)
     {
         /** @var ProductItem $c */
@@ -279,7 +284,9 @@ class ProductService extends DomainCommon implements ProductInterface
         if (isset($tmp["size"])) {
             $c->setSize($tmp["size"]);
         }
-
+        if (empty($tmp)) {
+            return null;
+        }
         foreach ($tmp as $k => $v) {
             $c->set($k, $v);
         }

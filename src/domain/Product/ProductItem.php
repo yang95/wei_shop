@@ -226,13 +226,16 @@ class ProductItem extends DomainCommon
     {
         $db      = $this->load("Mysql");
         $id      = $this->getId();
-        $product = json_encode($this->getProduct());
+        $product = $this->getProduct();
+        if (is_array($product)) {
+            $product = json_encode($product);
+        }
         #$db->debug();
         if ($id) {
             $iRes = $db->update('wei_product', [
                 "name"    => $this->getName(),
                 "price"   => $this->getPrice(),
-                "from"    => $this->getFrom,
+                "from"    => $this->getFrom(),
                 "credit"  => $this->getCredit(),
                 "content" => $this->getContent(),
                 "sale"    => $this->getSale(),

@@ -19,6 +19,19 @@ class CartItem extends DomainCommon
     public $product;
     public $param;
 
+    public function set($key, $value)
+    {
+        $data        = $this->getParam();
+        $data[$key]  = $value;
+        $this->param = $data;
+    }
+
+    public function get($key)
+    {
+        $data = $this->getParam();
+        return isset($data[$key]) ? $data[$key] : '';
+    }
+
     /**
      * @return mixed
      */
@@ -89,7 +102,7 @@ class CartItem extends DomainCommon
      */
     public function getParam()
     {
-        return $this->param;
+        return is_array($this->param) ? $this->param : [];
     }
 
     /**
@@ -97,9 +110,21 @@ class CartItem extends DomainCommon
      */
     public function setParam($param)
     {
-        $this->param = $param;
+        $this->param = json_decode($param, true);
     }
 
+    /**
+     * @return mixed
+     */
+    public function rm()
+    {
+        $db = $this->load("Mysql");
+        return $db->delete('wei_cart',
+            [
+                "id[=]" => $this->getId()
+            ]
+        );
+    }
 
     /*
      *

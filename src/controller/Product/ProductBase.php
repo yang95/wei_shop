@@ -11,6 +11,7 @@ namespace WEI\Controller\Product;
 
 use WEI\Controller\RestCommon;
 use WEI\Domain\Product\ProductCate;
+use WEI\Domain\Product\ProductItem;
 use WEI\Domain\Product\ProductService;
 use WEI\Domain\User\UserItem;
 use WEI\Domain\User\UserService;
@@ -114,6 +115,26 @@ class ProductBase extends RestCommon
         $p_s->initialize($u_i);
         $iData = $this->REQ->request();
         $rData = $p_s->saveCate($iData);
+        $this->finish(Error::ERR_NONE, $rData);
+    }
+
+    public function addproductAction()
+    {
+        $req   = $this->REQ->request();
+        $rData = false;
+        $pid   = isset($req["pid"]) ? $req["pid"] : 0;
+        $cid   = isset($req["cid"]) ? $req["cid"] : 0;
+        /** @var UserItem $u_s */
+        $u_i = $this->getUser();
+        /** @var ProductService $p_s */
+        $p_s = $this->domain("Product", "ProductService");
+        $p_s->initialize($u_i);
+        $c_i = $p_s->getProductCateById($cid);
+        $p_i = $p_s->getProductById($pid);
+        if ($c_i instanceof ProductCate && $p_i instanceof ProductItem) {
+            $c_i->addProduct($p_i);
+            $rData = $c_i->save();
+        }
         $this->finish(Error::ERR_NONE, $rData);
     }
 

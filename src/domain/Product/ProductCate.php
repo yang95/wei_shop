@@ -72,7 +72,7 @@ class ProductCate extends DomainCommon
      */
     public function getCate()
     {
-        return $this->cate;
+        return is_array($this->cate) ? $this->cate : [];
     }
 
     /**
@@ -80,11 +80,12 @@ class ProductCate extends DomainCommon
      */
     public function setCate($cate)
     {
-        $cate = json_decode($cate, true);
         if (is_array($cate)) {
-            $cate = [];
+            $this->cate = $cate;
+        } else {
+            $cate       = json_decode($cate, true);
+            $this->cate = $cate;
         }
-        $this->cate = $cate;
     }
 
     /**
@@ -96,8 +97,9 @@ class ProductCate extends DomainCommon
     {
         $vData = [];
         /** @var ProductService $ser */
-        $ser = $this->domain("Product", "ProductService");
-        foreach ($this->cate as $product_id) {
+        $ser  = $this->domain("Product", "ProductService");
+        $cate = $this->getCate();
+        foreach ($cate as $product_id) {
             #@todo 慢sql优化 使用 in
             $product = $ser->getProductById($product_id);
             if (!empty($product)) {
@@ -117,10 +119,12 @@ class ProductCate extends DomainCommon
     public function addProduct(ProductItem $product)
     {
         $product_id = $product->getId();
-        if (!in_array($this->cate, $product_id)) {
-            array_push($this->cate, $product_id);
+        $cate       = $this->getCate();
+        if (!in_array($product_id, $cate)) {
+            array_push($cate, $product_id);
         }
-        return 0;
+        $this->setCate($cate);
+        return 11;
     }
 
     /**

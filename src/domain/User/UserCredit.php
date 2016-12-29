@@ -13,6 +13,7 @@ use WEI\Domain\Common\DomainCommon;
 
 class UserCredit extends DomainCommon
 {
+    /** @var  UserItem $User */
     public $User;
     public $change;
     public $crdit;
@@ -28,7 +29,9 @@ class UserCredit extends DomainCommon
         $this->User = $User;
     }
 
-
+    /**
+     * @return int
+     */
     public function getCredit()
     {
         $db    = $this->load("Mysql");
@@ -39,6 +42,11 @@ class UserCredit extends DomainCommon
                 "id" => "desc"
             ]
         ]);
+        if (isset($iData["credit"])) {
+            $iData = $iData["credit"];
+        } else {
+            $iData = 0;
+        }
         return $iData;
     }
 

@@ -10,35 +10,60 @@
 namespace WEI\Domain\Cart;
 
 use WEI\Domain\Common\DomainCommon;
+use WEI\Domain\Product\ProductItem;
 use WEI\Domain\Product\ProductService;
 use WEI\Domain\User\UserItem;
 use WEI\Domain\User\UserService;
 
 class CartService extends DomainCommon
 {
-    public function createCart()
+    /**
+     * 创建 购物车
+     *
+     * @param UserItem    $user
+     * @param ProductItem $item
+     * @param             $param
+     *
+     * @return mixed
+     */
+    public function createCart(UserItem $user, ProductItem $item, $param)
     {
-        #@todo
-    }
-
-    public function rmCart()
-    {
-        #@todo
-    }
-
-    public function rmCartAll()
-    {
-        #@todo
+        $data               = is_array($param) ? $param : [];
+        $data["user_id"]    = $user->getId();
+        $data["product_id"] = $item->getId();
+        $c_i                = $this->buildCart($user, $data);
+        return $c_i->save();
     }
 
     /**
-     * 获取全部
+     * 清空购物车
+     *
+     * @param UserItem $User
+     *
+     * @return int
+     */
+    public function rmCartAll(UserItem $User)
+    {
+        $iData = $this->getCart($User);
+        $i     = 0;
+        if (is_array($iData)) {
+            /** @var CartItem $val */
+            foreach ($iData as $val) {
+                $val->rm();
+                $i++;
+            }
+        }
+        return $i;
+    }
+
+    /**
+     * 获取全部购物车
      *
      * @param UserItem $User
      *
      * @return array
      */
-    public function getOrder(UserItem $User)
+    public function getCart(UserItem $User)
     {
         $user_id = $User->getId();
         $db      = $this->load("Mysql");
@@ -51,23 +76,46 @@ class CartService extends DomainCommon
         $vData   = [];
         foreach ($tmp as $val) {
             if (!empty($val)) {
-                array_push($vData, $this->buildCart($val));
+                array_push($vData, $this->buildCart($User, $val));
             }
         }
         return $vData;
     }
 
     /**
+     * @param UserItem $user
+     * @param          $id
+     *
+     * @return null|CartItem
+     */
+    public function getCartById(UserItem $user, $id)
+    {
+        $db  = $this->load("Mysql");
+        $tmp = $db->get("wei_cart",
+            "*",
+            [
+                "id[=]" => $id
+            ]
+        );
+        if (empty($tmp)) {
+            return null;
+        }
+        return $this->buildCart($user, $tmp);
+    }
+
+    /**
      * 从数据库创建对象
      *
-     * @param $tmp
+     * @param UserItem $user
+     * @param          $tmp
      *
      * @return CartItem
      */
-    public function buildCart($tmp)
+    public function buildCart(UserItem $user, $tmp)
     {
         /** @var CartItem $c_i */
         $c_i = $this->domain("Cart", "CartItem");
+        $c_i->setUser($user);
         if (isset($tmp["id"])) {
             $c_i->setId($tmp["id"]);
         }

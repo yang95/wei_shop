@@ -21,6 +21,19 @@ class OrderItem extends DomainCommon
     public $pay;
     public $wuliu;
 
+    public function set($key, $value)
+    {
+        $data       = $this->getParam();
+        $data[$key] = $value;
+        $this->param = $data;
+    }
+
+    public function get($key)
+    {
+        $data = $this->getParam();
+        return isset($data[$key]) ? $data[$key] : '';
+    }
+
     /**
      * @return mixed
      */
@@ -90,7 +103,7 @@ class OrderItem extends DomainCommon
      */
     public function getParam()
     {
-        return $this->param;
+        return is_array($this->param) ? $this->param : [];
     }
 
     /**
@@ -98,7 +111,7 @@ class OrderItem extends DomainCommon
      */
     public function setParam($param)
     {
-        $this->param = $param;
+        $this->param = json_decode($param, true);
     }
 
     /**

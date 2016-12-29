@@ -12,6 +12,11 @@ use WEI\Domain\Common\DomainCommon;
 
 class AdService extends DomainCommon
 {
+    /**
+     * @param $arr
+     *
+     * @return array
+     */
     public function getAdList($arr)
     {
         $vData = [];
@@ -21,6 +26,13 @@ class AdService extends DomainCommon
         return $vData;
     }
 
+    /**
+     * 通过位置获取ad
+     *
+     * @param $position
+     *
+     * @return AdItem
+     */
     public function getAdByPosition($position)
     {
         $db = $this->load("Mysql");
@@ -28,6 +40,11 @@ class AdService extends DomainCommon
         return $this->buildAd($d);
     }
 
+    /**
+     * @param $tmp
+     *
+     * @return AdItem
+     */
     public function buildAd($tmp)
     {
         /** @var AdItem $c_i */

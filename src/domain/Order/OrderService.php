@@ -16,31 +16,38 @@ use WEI\Domain\Product\ProductService;
 use WEI\Domain\User\UserItem;
 use WEI\Domain\User\UserService;
 
-class OrderService extends DomainCommon implements OrderInterface
+class OrderService extends DomainCommon
 {
-    public function createOrder(UserItem $user, ProductItem $item)
+    public function createOrder(UserItem $user, ProductItem $item, $param)
     {
-        // TODO: Implement createOrder() method.
+        $param = is_array($param)?$param:[];
+        $param["user_id"]    = $user->getId();
+        $param["product_id"] = $item->getId();
+        $o_i                 = $this->buildOrder($user, $param);
+        return $o_i->save();
     }
 
-    public function createOrderByCart(UserItem $user, CartItem $item)
+    public function createOrderByCart(UserItem $user, CartItem $item, $param = [])
     {
-        // TODO: Implement createOrderByCart() method.
+        $param            = $item->getParam();
+        $param["address"] = $item->getAddress();
+        $product          = $item->getProduct();
+        if (!($product instanceof ProductItem)) {
+            return -1;#商品下架
+        }
+        return $this->createOrder($user, $product, $param);
     }
 
-    public function payOrder()
+    public function cancelOrder(OrderItem $o_i)
     {
-        #@todo
+        $o_i->set("cancel", 1);#user 取消
+        return $o_i->save();
     }
 
-    public function cancelOrder()
+    public function define_cancelOrder(OrderItem $o_i)
     {
-        #@todo
-    }
-
-    public function define_cancelOrder()
-    {
-        #@todo
+        $o_i->set("cancel", 11);#商家user 取消
+        return $o_i->save();
     }
 
     /**
@@ -63,23 +70,43 @@ class OrderService extends DomainCommon implements OrderInterface
         $vData   = [];
         foreach ($tmp as $val) {
             if (!empty($val)) {
-                array_push($vData, $this->buildOrder($val));
+                array_push($vData, $this->buildOrder($User, $val));
             }
         }
         return $vData;
     }
 
     /**
-     * 从数据库实例化对象
-     *
-     * @param $tmp
+     * @param UserItem $user
+     * @param          $id
      *
      * @return OrderItem
      */
-    public function buildOrder($tmp)
+    public function getOrderById(UserItem $user, $id)
+    {
+        $db  = $this->load("Mysql");
+        $tmp = $db->get("wei_order",
+            "*",
+            [
+                "id[=]" => $id
+            ]
+        );
+        return $this->buildOrder($user, $tmp);
+    }
+
+    /**
+     * 从数据库实例化对象
+     *
+     * @param UserItem $user
+     * @param          $tmp
+     *
+     * @return OrderItem
+     */
+    public function buildOrder(UserItem $user, $tmp)
     {
         /** @var OrderItem $c */
         $c = $this->domain("Order", "OrderItem");
+        $c->setUser($user);
         if (isset($tmp["id"])) {
             $c->setId($tmp["id"]);
         }
