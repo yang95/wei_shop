@@ -34,6 +34,11 @@ class Doc extends CliCommon
             "ProductExtends",
             "商品扩展接口",
         ],
+        [
+            "Home",
+            "Index",
+            "主页操作",
+        ],
     ];
 
     /**

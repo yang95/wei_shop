@@ -21,13 +21,37 @@ class ProductBase extends RestCommon
 {
     /**
      * 获取产品
-     *
+     * @request page
+     *          order
+     *          desc 有值 降序  无值 升序
      */
     public function productAction()
     {
+        $req = $this->REQ->request();
+        $size = 25;
+        $page = isset($req["page"])?$req["page"]:1;
+        $page = intval($page) > 0?intval($page):1;
+        $page--;
         /** @var ProductService $p_s */
         $p_s  = $this->domain("Product", "ProductService");
-        $cond = [];
+        $cond = [
+            "LIMIT"=>[
+                $size*$page,$size
+            ]
+        ];
+        if(isset($req["order"])){
+            $asc = isset($req["desc"])?"DESC":"ASC";
+            $order = "id";
+            if($req["order"] == "price"){
+                $order = "price";
+            }
+            if($req["order"] == "sale"){
+                $order = "sale";
+            }
+            $cond = array_merge($cond,[
+                "ORDER"=> [$order=>$asc]
+            ]);
+        }
         END:
         $rData = $p_s->getProductByCond($cond);
         $this->finish(Error::ERR_NONE, $rData);

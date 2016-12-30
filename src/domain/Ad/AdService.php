@@ -9,6 +9,7 @@
 namespace WEI\Domain\Ad;
 
 use WEI\Domain\Common\DomainCommon;
+use WEI\Lib\Db\Db;
 
 class AdService extends DomainCommon
 {
@@ -38,6 +39,30 @@ class AdService extends DomainCommon
         $db = $this->load("Mysql");
         $d  = $db->get("wei_ad", "*", ["position[=]" => $position]);
         return $this->buildAd($d);
+    }
+
+    /**
+     * 获取ad list
+     * @param $array
+     *
+     * @return array
+     */
+    public function getAd($array){
+        /** @var Db $db */
+        $db = $this->load("Mysql");
+        #$db->debug();
+        $d  = $db->select("wei_ad", "*",$array );
+        if(empty($d)){
+            return;
+        }
+        $vData = [];
+        foreach( $d as $value){
+            if(  isset($value["id"]) ){
+                $tmp = $this->buildAd($value);
+                array_push($vData,$tmp);
+            }
+        }
+        return $vData;
     }
 
     /**

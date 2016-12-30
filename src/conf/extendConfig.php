@@ -67,5 +67,13 @@ return [
         $appid     = "ascascascasca";
         $appsecret = "scascadscsdcsd";
         return new WEI\Lib\Wechat\Wechat($appid, $appsecret);
+    },
+    "Smart"   => function(){
+        $smarty = new Smarty();
+        $smarty->templates(ROOT."/tpl/default"); //设置模板目录
+        $smarty->templates_c(ROOT."/tpl/default_c"); //设置编译目录
+        $smarty->left_delimiter = "<{";
+        $smarty->right_delimiter = "}>";
+        return $smarty;
     }
 ];

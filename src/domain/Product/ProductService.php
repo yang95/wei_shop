@@ -11,6 +11,7 @@ namespace WEI\Domain\Product;
 
 use WEI\Domain\Common\DomainCommon;
 use WEI\Domain\User\UserItem;
+use WEI\Lib\Db\Db;
 
 class ProductService extends DomainCommon implements ProductInterface
 {
@@ -81,8 +82,8 @@ class ProductService extends DomainCommon implements ProductInterface
      */
     public function getProductByCond($cond)
     {
+        /** @var Db $db */
         $db = $this->load("Mysql");
-        #debug  $db->debug();
         $data  = $db->select("wei_product", "*", $cond);
         $vData = [];
         if (!empty($data)) {
